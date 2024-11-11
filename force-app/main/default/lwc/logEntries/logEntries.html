@@ -1,0 +1,63 @@
+<template>
+    <!-- Card for Project Selection -->
+    <lightning-card title="Select Project & Task" icon-name="action:task" hide-header="true">
+        <p>{userName}</p>
+        <div class="slds-p-around_medium">
+            <lightning-combobox 
+                name="projects" 
+                label="Select Project" 
+                value={selectedProject} 
+                placeholder="Choose Project" 
+                options={projectOptions} 
+                onchange={handleProjectChange}>
+            </lightning-combobox>
+
+            <template if:true={taskOptions}>
+                <lightning-combobox 
+                    name="tasks" 
+                    label="Select Task" 
+                    value={selectedTask} 
+                    placeholder="Choose Task" 
+                    options={taskOptions} 
+                    onchange={handleTaskChange}>
+                </lightning-combobox>
+            </template>
+        </div>
+    </lightning-card>
+
+    <!-- Card for Logging Time -->
+    <template if:true={selectedTask}>
+    <lightning-card title="Log Time for Task" icon-name="action:log_a_call">
+        <div class="slds-p-around_medium">
+            <lightning-record-edit-form 
+                object-api-name="Time_Entry__c" 
+                onsuccess={handleSuccess} 
+                onerror={handleError}>
+
+                <div class="slds-grid slds-gutters slds-wrap">
+                    <!-- Left side - Start Date and End Date vertically aligned -->
+                    <div class="slds-col slds-size_1-of-3">
+                        <lightning-input-field field-name="Task__c" value={selectedTask} disabled></lightning-input-field>
+                        <lightning-input-field field-name="Start__c" onchange={handleStartDateChange}></lightning-input-field>
+                        <lightning-input-field field-name="End__c" onchange={handleEndDateChange}></lightning-input-field>
+                    </div>
+
+                    <!-- Right side - Description aligned beside Start Date and End Date -->
+                    <div class="slds-col slds-size_2-of-3">
+                        <br>
+                        <div class="slds-col slds-size_1-of-3">
+                            <lightning-input-field field-name="Description__c"></lightning-input-field>
+                            <lightning-input type="text" label="Hours" value={hours} placeholder="type here..." disabled></lightning-input>
+                        </div>
+                    </div>
+                </div>
+
+                <lightning-button class="slds-m-top_medium" variant="brand" type="submit" label="Log Time">
+                </lightning-button>
+
+            </lightning-record-edit-form>
+        </div>
+    </lightning-card>
+</template>
+
+</template>
