@@ -102,7 +102,8 @@ export default class LogEntries extends LightningElement {
     }
 
     handleError(event){
-        console.log('error'+JSON.stringify(event));
+        console.log('error'+JSON.stringify(event),event.detail.detail);
+        this.showToast("Error", event.detail.detail, "error");
     }
 
     handleSuccess(event){
